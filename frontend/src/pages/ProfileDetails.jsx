@@ -51,6 +51,9 @@ function AttendancePanel({ profileId, baseSalary }) {
   const [newDate, setNewDate] = useState('')
   const [newPresent, setNewPresent] = useState(true)
   const [addLoading, setAddLoading] = useState(false)
+  
+  // Success message state
+  const [successMessage, setSuccessMessage] = useState(null)
 
   async function load() {
     setLoading(true)
@@ -162,16 +165,31 @@ function AttendancePanel({ profileId, baseSalary }) {
     
     setRangeLoading(true)
     try {
-      await http.post(`/employee-profiles/${profileId}/attendance/mark-present-range`, {
+      const response = await http.post(`/employee-profiles/${profileId}/attendance/present-range`, {
         start_date: startDate,
         end_date: endDate,
         include_weekends: false // Automatically exclude weekends
       })
+      
+      // Show success message with salary info
+      const data = response.data
+      setSuccessMessage({
+        totalDays: data.total_days,
+        workingDays: data.working_days,
+        weekendDays: data.weekend_days,
+        salary: data.salary_for_range,
+        startDate: data.start_date,
+        endDate: data.end_date,
+        weekendDates: data.weekend_dates
+      })
+      
       setStartDate('')
       setEndDate('')
       await load()
     } catch (error) {
       console.error('Error marking attendance range:', error)
+      const errorMessage = error.response?.data?.message || error.message || 'Error marking attendance range. Please try again.'
+      alert(errorMessage)
     } finally {
       setRangeLoading(false)
     }
@@ -297,6 +315,31 @@ function AttendancePanel({ profileId, baseSalary }) {
       </form>
 
       {loading ? <div className="muted">Loading…</div> : null}
+      
+      {successMessage && (
+        <div className="successMessage">
+          <div className="successMessage__content">
+            <h4>✅ Attendance Range Successfully Marked!</h4>
+            <div className="successMessage__details">
+              <div><strong>Date Range:</strong> {successMessage.startDate} to {successMessage.endDate}</div>
+              <div><strong>Total Days:</strong> {successMessage.totalDays}</div>
+              <div><strong>Working Days:</strong> {successMessage.workingDays}</div>
+              {successMessage.weekendDays > 0 && (
+                <div style={{color: '#dc2626'}}>
+                  <strong>Weekend Days:</strong> {successMessage.weekendDays} (No salary)
+                </div>
+              )}
+              <div><strong>Salary Stored:</strong> ₱{Number(successMessage.salary).toLocaleString()}</div>
+              {successMessage.weekendDays > 0 && (
+                <div style={{fontSize: '12px', color: '#6b7280', marginTop: '8px'}}>
+                  💡 Weekends automatically excluded from salary calculation
+                </div>
+              )}
+            </div>
+            <button className="btn btn--sm" onClick={() => setSuccessMessage(null)}>Dismiss</button>
+          </div>
+        </div>
+      )}
 
       <div className="table table--salary">
         <div className="table__head">

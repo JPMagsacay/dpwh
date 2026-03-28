@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\AttendanceRecord;
 use App\Models\EmployeeProfile;
 use App\Models\YearlySalaryRecord;
+use App\Models\DateRangeSalaryRecord;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -76,23 +77,18 @@ class AttendanceController extends Controller
 
         $includeWeekends = (bool) ($validated['include_weekends'] ?? false);
 
-        // Pre-scan weekends so we can fail atomically (no partial saves).
+        // Count working days and weekend days separately
+        $workingDaysCount = 0;
+        $weekendDaysCount = 0;
         $weekendDates = [];
+        
         for ($d = $start->copy(); $d->lte($end); $d->addDay()) {
             if ($d->isWeekend()) {
+                $weekendDaysCount++;
                 $weekendDates[] = $d->toDateString();
+            } else {
+                $workingDaysCount++;
             }
-        }
-
-        if (! $includeWeekends && ! empty($weekendDates)) {
-            throw ValidationException::withMessages([
-                'include_weekends' => [
-                    'Weekend dates are not allowed for this range. Enable "Include weekends" to mark Sat/Sun as present.',
-                ],
-                'weekends' => [
-                    'Weekend dates: '.implode(', ', $weekendDates),
-                ],
-            ]);
         }
 
         $yearsTouched = [];
@@ -102,20 +98,27 @@ class AttendanceController extends Controller
             $dateStr = $d->toDateString();
             $yearsTouched[$d->year] = true;
 
-            AttendanceRecord::updateOrCreate(
-                [
-                    'employee_profile_id' => $employeeProfile->id,
-                    'date' => $dateStr,
-                ],
-                [
-                    'present' => true,
-                ]
-            );
-
-            $updatedCount++;
+            // Mark as present only if not weekend, or if weekends are explicitly included
+            $shouldMarkPresent = !$d->isWeekend() || $includeWeekends;
+            
+            if ($shouldMarkPresent) {
+                AttendanceRecord::updateOrCreate(
+                    [
+                        'employee_profile_id' => $employeeProfile->id,
+                        'date' => $dateStr,
+                    ],
+                    [
+                        'present' => true,
+                    ]
+                );
+                $updatedCount++;
+            }
         }
 
-        // Recalculate yearly salary for all affected years for the current status/designation snapshots.
+        // Store salary specifically for working days only (weekends automatically excluded from salary)
+        $this->storeSalaryForDateRange($employeeProfile, $start, $end, $workingDaysCount, $weekendDaysCount);
+
+        // Also update yearly totals
         foreach (array_keys($yearsTouched) as $year) {
             $this->syncYearlySalaryFromAttendance($employeeProfile, (int) $year, $start->toDateString());
         }
@@ -124,7 +127,12 @@ class AttendanceController extends Controller
             'ok' => true,
             'start_date' => $start->toDateString(),
             'end_date' => $end->toDateString(),
+            'total_days' => $workingDaysCount + $weekendDaysCount,
+            'working_days' => $workingDaysCount,
+            'weekend_days' => $weekendDaysCount,
             'days_marked_present' => $updatedCount,
+            'salary_for_range' => round(((float) $employeeProfile->base_salary) * $workingDaysCount, 2),
+            'weekend_dates' => $weekendDates,
         ]);
     }
 
@@ -141,6 +149,29 @@ class AttendanceController extends Controller
         return response()->json([
             'ok' => true,
         ]);
+    }
+
+    private function storeSalaryForDateRange(EmployeeProfile $employeeProfile, Carbon $startDate, Carbon $endDate, int $workingDays, int $weekendDays): void
+    {
+        $salary = round(((float) $employeeProfile->base_salary) * $workingDays, 2);
+        
+        // Create a unique key for this date range
+        $rangeKey = 'range_' . $startDate->format('Y_m_d') . '_to_' . $endDate->format('Y_m_d');
+        
+        // Store in the new date_range_salary_records table
+        DateRangeSalaryRecord::updateOrCreate(
+            [
+                'employee_profile_id' => $employeeProfile->id,
+                'range_key' => $rangeKey,
+            ],
+            [
+                'start_date' => $startDate->toDateString(),
+                'end_date' => $endDate->toDateString(),
+                'working_days' => $workingDays,
+                'weekend_days' => $weekendDays,
+                'salary' => $salary,
+            ]
+        );
     }
 
     private function syncYearlySalaryFromAttendance(EmployeeProfile $employeeProfile, int $year, ?string $effectiveDate = null): void
