@@ -1,0 +1,326 @@
+.print-area {
+  background: white;
+  padding: 20px 16px;
+}
+
+.sr-container {
+  width: 960px;
+  max-width: 100%;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  color: black;
+  line-height: 1.25;
+}
+
+.sr-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 88px;
+  margin-bottom: 8px;
+}
+
+.logo {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+}
+
+.header-text {
+  text-align: center;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.2;
+}
+
+.header-text__small {
+  font-size: 13px;
+}
+
+.header-text__dept {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+/* Date Range Picker Styles */
+.dateRangeInputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.dateRangeSeparator {
+  color: #6b7280;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.workingDaysInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  background: #f9fafb;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+}
+
+.workingDaysInfo .muted {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+@media (max-width: 640px) {
+  .dateRangeInputs {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .dateRangeSeparator {
+    text-align: center;
+    padding: 4px 0;
+  }
+}
+
+/* Add Form Styles */
+.table__row--add {
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+}
+
+.table__row--add .input--sm {
+  font-size: 13px;
+  padding: 6px 8px;
+  min-width: 140px;
+}
+
+.check--sm {
+  font-size: 13px;
+}
+
+.check--sm input {
+  margin-right: 4px;
+}
+
+.header-text__line {
+  font-size: 12px;
+}
+
+.sr-title-block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  text-align: center;
+  font-weight: 700;
+  font-size: 18px;
+  margin-top: 6px;
+  line-height: 1.1;
+}
+
+.subtitle {
+  text-align: center;
+  margin-bottom: 14px;
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.sr-info {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.sr-info td {
+  padding: 4px 6px;
+  font-size: 14px;
+}
+
+.label {
+  width: 76px;
+  font-weight: bold;
+}
+
+.line {
+  border-bottom: 1px solid black;
+  text-align: center;
+  min-width: 140px;
+  vertical-align: bottom;
+}
+
+.note {
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.sub td {
+  font-size: 12px;
+  text-align: center;
+}
+
+.sr-desc {
+  font-size: 14px;
+  margin: 12px 0 8px;
+  text-align: left;
+}
+
+.sr-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  table-layout: fixed;
+}
+
+.sr-table th,
+.sr-table td {
+  border: 1px solid black;
+  padding: 5px 3px;
+  text-align: center;
+  vertical-align: top;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+.sr-table th {
+  font-weight: 700;
+  white-space: normal;
+}
+
+.sr-table tbody td {
+  white-space: nowrap;
+}
+
+.sr-table tbody td:nth-child(6),
+.sr-table tbody td:nth-child(10) {
+  white-space: normal;
+}
+
+.sr-footer {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.signature-row {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.signature-left {
+  text-align: center;
+  min-width: 180px;
+}
+
+.signature {
+  text-align: center;
+  min-width: 260px;
+}
+
+.signature p {
+  margin: 0 0 24px;
+}
+
+.attendanceReportPrint {
+  margin-top: 14px;
+}
+
+.attendanceReport__title {
+  margin-top: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.attendanceReport__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.attendanceReport__table th,
+.attendanceReport__table td {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: left;
+  color: var(--text-h);
+  background: var(--bg);
+}
+
+.attendanceReport__table th {
+  background: var(--card-bg);
+}
+
+.attendanceReport__summary {
+  margin-top: 14px;
+}
+
+.attendanceReport__table--compact {
+  max-width: 420px;
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+
+  html,
+  body {
+    background: #fff;
+    margin: 0;
+    padding: 0;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  .print-area,
+  .print-area *,
+  .attendanceReportPrint,
+  .attendanceReportPrint * {
+    visibility: visible !important;
+  }
+
+  .print-area,
+  .attendanceReportPrint {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sr-container,
+  .attendanceReportPrint {
+    width: 100%;
+  }
+
+  .shell,
+  .shell__main,
+  .page2 {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .no-print {
+    display: none;
+  }
+}

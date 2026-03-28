@@ -1,0 +1,202 @@
+.loginPage {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 28px 18px;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #f3f6fb 0%, #eef2f8 100%);
+}
+
+.loginCard {
+  width: min(960px, 100%);
+  min-height: 540px;
+  border: 1px solid rgba(11, 33, 79, 0.22);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+}
+
+.loginFormPane {
+  background: #02025C;
+  color: #ffffff;
+  padding: 38px 34px;
+  display: grid;
+  align-content: center;
+  gap: 10px;
+}
+
+.loginLogoSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.loginLogoSmall {
+  width: 80px;
+  height: auto;
+  object-fit: contain;
+}
+
+.loginTagline {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+  text-align: center;
+}
+
+.loginTitle {
+  margin: 0;
+  color: #ffffff;
+  font-size: 42px;
+  line-height: 1.1;
+  letter-spacing: -0.4px;
+}
+
+.loginSubtitle {
+  color: rgba(255, 255, 255, 0.92);
+  margin-bottom: 14px;
+  font-size: 20px;
+}
+
+.loginFormPane .field__label {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.loginFormPane .field__input {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #0b1220;
+  min-height: 48px;
+  box-sizing: border-box;
+  padding: 0 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+}
+
+.loginFormPane .field__input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.loginFormPane .field__input::placeholder {
+  color: rgba(11, 18, 32, 0.5);
+}
+
+.signInButton {
+  background: #ffffff;
+  border: 2px solid #ffffff;
+  color: #02025C;
+  font-weight: 600;
+  font-size: 16px;
+  min-height: 48px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0 24px;
+  width: 100%;
+}
+
+.signInButton:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.signInButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.loginFormPane .btn--primary {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #0b4ea2;
+  font-weight: 700;
+  min-height: 48px;
+  font-size: 20px;
+}
+
+.loginFooter {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.loginFooter a {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.loginLogoPane {
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  order: -1;
+  border-right: 1px solid rgba(11, 33, 79, 0.15);
+}
+
+.loginLogoLarge {
+  width: min(340px, 78%);
+  height: auto;
+  object-fit: contain;
+}
+
+.loginLogoTagline {
+  color: #02025C;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 0 0;
+  text-align: center;
+}
+
+@media (max-width: 860px) {
+  .loginCard {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .loginLogoPane {
+    order: -1;
+    min-height: 210px;
+  }
+
+  .loginTitle {
+    font-size: 34px;
+  }
+
+  .loginSubtitle {
+    font-size: 18px;
+  }
+}
+.passwordField {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordField .field__input {
+  width: 100%;
+  padding-right: 40px; /* space for icon */
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #6b7280; /* gray like your image */
+}

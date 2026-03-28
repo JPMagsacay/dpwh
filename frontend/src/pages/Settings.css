@@ -1,0 +1,20 @@
+.themeSwitch {
+  display: inline-flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.themeSwitch__btn {
+  font: inherit;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.themeSwitch__btn--active {
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+}
