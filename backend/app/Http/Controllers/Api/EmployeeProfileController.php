@@ -29,7 +29,7 @@ class EmployeeProfileController extends Controller
     public function show(EmployeeProfile $employeeProfile): JsonResponse
     {
         $employeeProfile->load([
-            'yearlySalaryRecords' => fn ($q) => $q->orderByDesc('year')->orderByDesc('id'),
+            'yearlySalaryRecords' => fn ($q) => $q->orderByDesc('year')->orderBy('employment_status_snapshot')->orderByDesc('id'),
         ]);
 
         return response()->json([

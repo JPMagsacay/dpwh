@@ -10,6 +10,10 @@
 }
 
 .sidenav {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow-y: auto;
   border-right: 1px solid var(--border);
   background: var(--card-bg);
   padding: 18px 14px;
@@ -130,9 +134,6 @@
   }
 
   .sidenav {
-    position: sticky;
-    top: 0;
-    z-index: 10;
     border-right: none;
     border-bottom: 1px solid var(--border);
   }

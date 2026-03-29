@@ -264,7 +264,13 @@
 
 .table--salary .table__head,
 .table--salary .table__row {
-  grid-template-columns: minmax(70px, 1fr) minmax(140px, 1.2fr) minmax(90px, 1fr) 120px;
+  grid-template-columns:
+    minmax(108px, 1fr) minmax(88px, 0.85fr) minmax(120px, 1.15fr) minmax(88px, 0.85fr) minmax(104px, auto);
+}
+
+.table--yearly-salary .table__head,
+.table--yearly-salary .table__row {
+  grid-template-columns: 72px minmax(100px, 1.4fr) minmax(88px, 0.9fr) 100px;
 }
 
 .table__head {
@@ -366,9 +372,22 @@
     grid-template-columns: 1fr 1fr 90px;
   }
 
-  .table--salary .table__head,
-  .table--salary .table__row {
-    grid-template-columns: 1fr 1fr 1fr 90px;
+  .attendancePanel__tableWrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-left: -4px;
+    margin-right: -4px;
+    padding-bottom: 4px;
+  }
+
+  .attendancePanel__tableWrap .table--salary {
+    min-width: 560px;
+  }
+
+  .table--yearly-salary .table__head,
+  .table--yearly-salary .table__row {
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
 }
 
