@@ -198,5 +198,5 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  color: #6b7280; /* gray like your image */
+  color: var(--text);
 }

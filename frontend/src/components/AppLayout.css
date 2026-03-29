@@ -82,7 +82,7 @@
 }
 
 .sidenav__menuBtn--danger {
-  color: #b91c1c;
+  color: var(--text-h);
 }
 
 .sidenav__userName {

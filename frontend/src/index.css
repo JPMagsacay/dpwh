@@ -14,6 +14,19 @@
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
+  /* Status colors */
+  --success-bg: rgba(34, 197, 94, 0.14);
+  --success-border: rgba(34, 197, 94, 0.35);
+  --success-text: var(--text-h);
+  
+  --warning-bg: rgba(245, 158, 11, 0.14);
+  --warning-border: rgba(245, 158, 11, 0.35);
+  --warning-text: var(--text-h);
+  
+  --error-bg: rgba(220, 38, 38, 0.14);
+  --error-border: rgba(220, 38, 38, 0.35);
+  --error-text: var(--text-h);
+
   --sans: 'Poppins', system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: 'Poppins', system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
@@ -46,6 +59,19 @@
   --social-bg: rgba(47, 48, 58, 0.5);
   --shadow:
     rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+
+  /* Status colors for dark mode */
+  --success-bg: rgba(34, 197, 94, 0.2);
+  --success-border: rgba(34, 197, 94, 0.4);
+  --success-text: var(--text-h);
+  
+  --warning-bg: rgba(245, 158, 11, 0.2);
+  --warning-border: rgba(245, 158, 11, 0.4);
+  --warning-text: var(--text-h);
+  
+  --error-bg: rgba(220, 38, 38, 0.2);
+  --error-border: rgba(220, 38, 38, 0.4);
+  --error-text: var(--text-h);
   color-scheme: dark;
 }
 
