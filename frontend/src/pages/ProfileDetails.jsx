@@ -645,15 +645,26 @@ function SalaryPanel({ profileId, baseSalary, currentStatus }) {
       const segmentChanged = salarySegmentRef.current !== segmentKey
       salarySegmentRef.current = segmentKey
 
+      // Calculate actual working days for casual employees
+      const workingDays = effectiveEmploymentStatus.toLowerCase().trim() === 'casual' 
+        ? rows.filter(r => r.present && String(r.employment_status_snapshot ?? '') === effectiveEmploymentStatus).length || 1
+        : 1
+
       if (segmentChanged) {
-        setSalary(String(floor.toFixed(2)))
+        const displaySalary = effectiveEmploymentStatus.toLowerCase().trim() === 'casual' 
+          ? floor / workingDays 
+          : floor
+        setSalary(String(displaySalary.toFixed(2)))
         return
       }
 
       setSalary((prev) => {
         const prevNum = Number(prev || 0)
         const next = Math.max(prevNum, floor)
-        return String(next.toFixed(2))
+        const displaySalary = effectiveEmploymentStatus.toLowerCase().trim() === 'casual' 
+          ? next / workingDays 
+          : next
+        return String(displaySalary.toFixed(2))
       })
     }
 
@@ -663,7 +674,12 @@ function SalaryPanel({ profileId, baseSalary, currentStatus }) {
   async function upsert(e) {
     e.preventDefault()
     const salaryNumber = Number(salary || 0)
+    
+    // Only apply minimum salary validation to permanent employees
+    const isPermanent = effectiveEmploymentStatus.toLowerCase().trim() === 'permanent'
+    
     if (
+      isPermanent &&
       attendanceBasedMin !== null &&
       Number.isFinite(salaryNumber) &&
       salaryNumber < attendanceBasedMin
@@ -757,7 +773,7 @@ function SalaryPanel({ profileId, baseSalary, currentStatus }) {
           <input
             className="input"
             type="number"
-            min={attendanceBasedMin ?? 0}
+            min={effectiveEmploymentStatus.toLowerCase().trim() === 'permanent' ? (attendanceBasedMin ?? 0) : 0}
             step="0.01"
             value={salary}
             onChange={(e) => setSalary(e.target.value)}

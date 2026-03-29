@@ -50,7 +50,8 @@ class YearlySalaryController extends Controller
 
         $minSalary = $this->attendanceMinimumForYear($employeeProfile, $year, $statusSnapshot);
 
-        if ($salary < $minSalary) {
+        // Only apply minimum salary validation for permanent employees
+        if (strtolower(trim($statusSnapshot)) === 'permanent' && $salary < $minSalary) {
             throw ValidationException::withMessages([
                 'salary' => [
                     "Salary cannot be less than the attendance-based amount ({$minSalary}). You may enter a higher amount.",
